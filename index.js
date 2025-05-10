@@ -35,17 +35,17 @@ const upload = multer({ storage: storage });
 //   }
 // }
 
+app.get("/ping", (req, res) => {
+  res.json({ status: "ok", message: "Server is running" });
+});
+
 app.post("/extract-pdf", upload.single("pdf"), async (req, res) => {
   try {
     const pdfBuffer = req.file.buffer;
     const data = await pdfParse(pdfBuffer);
 
-    // Analyze content using Gemini AI
-    // const structuredContent = await analyzeContent(data.text);
-
     res.json({
       text: data.text, // Original plain text
-      //   structured_content: structuredContent, // AI-structured content
       html: data.html || "", // Experimental: not always populated
       metadata: {
         info: data.info,
