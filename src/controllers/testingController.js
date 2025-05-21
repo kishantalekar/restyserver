@@ -11,6 +11,21 @@ const createTesting = async (req, res) => {
   }
 };
 
+const getAllTests = async (req, res) => {
+  try {
+    const tests = await Testing.find({});
+    res.status(200).json({
+      success: true,
+      data: tests,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
 module.exports = {
   createTesting,
+  getAllTests,
 };
